@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
+    
+  
+
+Route::group(['middleware' => ["auth:sanctum"]], function(){
+    //rutas
+    Route::post('userProfile', [UserController::class, 'userProfile']);
+    Route::post('logout', [UserController::class, 'logout']);
     //categorias
     Route::post('create-category',[CategoriesController::class, 'create']);
     Route::get('list-category',[CategoriesController::class, 'list']);
@@ -34,13 +41,6 @@ Route::post('login', [UserController::class, 'login']);
     Route::get('list-products',[ProductController::class, 'list']);
     Route::put('update-products/{id}',[ProductController::class, 'update']);
     Route::delete('delete-products/{id}',[ProductController::class, 'delete']);
-
-Route::group(['middleware' => ["auth:sanctum"]], function(){
-    //rutas
-    Route::post('userProfile', [UserController::class, 'userProfile']);
-    Route::post('logout', [UserController::class, 'logout']);
-    
-
 
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
